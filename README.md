@@ -5,11 +5,6 @@ Static website for Photon Security Consulting services.
 ## 🌐 Live Site
 [photonsec.com.au](https://photonsec.com.au)
 
-## 📧 Contact
-- **Email**: contact@photonsec.com.au (bot-protected)
-- **Phone**: +61 (0) 434 858 765
-- **Location**: Sunshine Coast, Queensland, Australia
-
 ## 🛠️ Technology Stack
 - HTML5
 - CSS3 (Bootstrap)
