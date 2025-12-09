@@ -41,3 +41,10 @@ node_modules/
 # Backup files
 *.bak
 *.backup
+
+# Private keys and certificates
+*.key
+*.pem
+*.p12
+*.pfx
+*.lego
