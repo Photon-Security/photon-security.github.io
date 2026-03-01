@@ -1,0 +1,274 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- SEO --><title>Web Debugging — A Practical Security Perspective</title><meta name="description" content="Effective web debugging techniques for security professionals — using browser DevTools, mitmproxy, Burp Suite, and custom scripts to intercept, inspect, and modify HTTP/HTTPS traffic."><link rel="canonical" href="https://photonsec.com.au/articles/web-debugging-security-perspective/"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://photonsec.com.au/articles/web-debugging-security-perspective/"><meta property="og:title" content="Web Debugging — A Practical Security Perspective"><meta property="og:description" content="Effective web debugging techniques for security professionals — using browser DevTools, mitmproxy, Burp Suite, and custom scripts to intercept, inspect, and modify HTTP/HTTPS traffic."><meta property="og:image" content="https://photonsec.com.au/photon-sec-banner.jpeg"><meta property="og:site_name" content="PhotonSec"><meta property="og:locale" content="en_AU"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Web Debugging — A Practical Security Perspective"><meta name="twitter:description" content="Effective web debugging techniques for security professionals — using browser DevTools, mitmproxy, Burp Suite, and custom scripts to intercept, inspect, and modify HTTP/HTTPS traffic."><meta name="twitter:image" content="https://photonsec.com.au/photon-sec-banner.jpeg"><!-- Favicon --><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon.png"><!-- Fonts (self-hosted alternative: use Google Fonts preconnect) --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"><!-- JSON-LD Structured Data --><script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Florian Bidabé",
+        "jobTitle": "Cyber Security Leader",
+        "url": "https://photonsec.com.au",
+        "sameAs": [
+          "https://github.com/Enelass",
+          "https://www.linkedin.com/in/bidabe"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Commonwealth Bank of Australia"
+        }
+      }
+    </script><link rel="stylesheet" href="/_astro/_slug_.CHhW2Tyl.css"></head> <body class="bg-bg-primary"> <header id="nav-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"> <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex items-center justify-between h-16"> <!-- Logo --> <a href="/" class="flex items-center gap-3 group"> <img src="/photon-sec-banner.jpeg" alt="PhotonSec" class="h-8 w-auto rounded-sm opacity-90 group-hover:opacity-100 transition-opacity"> <span class="text-lg font-bold text-white hidden sm:block">PhotonSec</span> </a> <!-- Desktop Nav --> <div class="hidden md:flex items-center gap-1"> <a href="/" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Home </a><a href="/about" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> About </a><a href="/projects" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Projects </a><a href="/articles" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-accent-blue bg-accent-blue/10"> Articles </a><a href="/findings" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Findings </a> <a href="/members/dashboard" class="ml-3 px-4 py-2 bg-accent-blue/20 border border-accent-blue/40 text-accent-blue text-sm font-semibold rounded-lg hover:bg-accent-blue hover:text-white transition-all duration-200">
+Member Zone
+</a> </div> <!-- Mobile menu button --> <button id="mobile-menu-btn" class="md:hidden p-2 text-text-secondary hover:text-white transition-colors" aria-label="Toggle menu" aria-expanded="false"> <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg> <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path> </svg> </button> </div> <!-- Mobile Nav --> <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-border-subtle mt-1"> <div class="flex flex-col gap-1 pt-3"> <a href="/" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Home </a><a href="/about" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> About </a><a href="/projects" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Projects </a><a href="/articles" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Articles </a><a href="/findings" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Findings </a> <a href="/members/dashboard" class="mt-2 px-4 py-3 bg-accent-blue/20 border border-accent-blue/40 text-accent-blue text-sm font-semibold rounded-lg hover:bg-accent-blue hover:text-white transition-all duration-200">
+Member Zone
+</a> </div> </div> </nav> </header> <!-- Spacer for fixed nav --> <div class="h-16"></div> <script type="module">const e=document.getElementById("nav-header"),d=document.getElementById("mobile-menu-btn"),n=document.getElementById("mobile-menu"),r=document.getElementById("menu-icon"),o=document.getElementById("close-icon");window.addEventListener("scroll",()=>{window.scrollY>10?e?.classList.add("bg-bg-primary/90","backdrop-blur-md","border-b","border-border-subtle"):e?.classList.remove("bg-bg-primary/90","backdrop-blur-md","border-b","border-border-subtle")});d?.addEventListener("click",()=>{const t=d.getAttribute("aria-expanded")==="true";d.setAttribute("aria-expanded",String(!t)),n?.classList.toggle("hidden"),r?.classList.toggle("hidden"),o?.classList.toggle("hidden"),t?window.scrollY<=10&&e?.classList.remove("bg-bg-primary/95","backdrop-blur-md"):e?.classList.add("bg-bg-primary/95","backdrop-blur-md")});</script> <main>   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8"> <div class="animate-on-scroll"> <!-- Breadcrumb --> <nav class="flex items-center gap-2 text-sm text-text-muted mb-8"> <a href="/" class="hover:text-accent-blue transition-colors">Home</a> <span>›</span> <a href="/articles" class="hover:text-accent-blue transition-colors">Articles</a> <span>›</span> <span class="text-text-secondary truncate">Web Debugging — A Practical Security Perspective</span> </nav> <!-- Category + date --> <div class="flex flex-wrap items-center gap-3 mb-5"> <span class="badge badge-red">Security Research</span> <span class="text-text-muted text-sm">30 September 2025</span> <span class="text-text-muted text-sm flex items-center gap-1"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> 11 min read
+</span> </div> <!-- Title --> <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6"> Web Debugging — A Practical Security Perspective </h1> <!-- Description --> <p class="text-text-secondary text-xl leading-relaxed mb-8">Effective web debugging techniques for security professionals — using browser DevTools, mitmproxy, Burp Suite, and custom scripts to intercept, inspect, and modify HTTP/HTTPS traffic.</p> <!-- Tags --> <div class="flex flex-wrap gap-2 mb-8"> <span class="badge-gray text-xs">Web Debugging</span><span class="badge-gray text-xs">Burp Suite</span><span class="badge-gray text-xs">mitmproxy</span><span class="badge-gray text-xs">DevTools</span><span class="badge-gray text-xs">HTTP</span><span class="badge-gray text-xs">Security Testing</span><span class="badge-gray text-xs">Proxy</span> </div> <!-- Divider --> <div class="border-b border-border-subtle"></div> </div> </div>  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10"> <article class="prose-dark max-w-none
+      [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-text-primary [&_h1]:mb-6 [&_h1]:mt-10
+      [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-text-primary [&_h2]:mb-4 [&_h2]:mt-10 [&_h2]:pb-2 [&_h2]:border-b [&_h2]:border-border-subtle
+      [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-text-primary [&_h3]:mb-3 [&_h3]:mt-8
+      [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-text-primary [&_h4]:mb-2 [&_h4]:mt-6
+      [&_p]:text-text-secondary [&_p]:leading-relaxed [&_p]:mb-4
+      [&_ul]:text-text-secondary [&_ul]:space-y-2 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6
+      [&_ol]:text-text-secondary [&_ol]:space-y-2 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6
+      [&_li]:leading-relaxed
+      [&_a]:text-accent-blue [&_a]:hover:text-accent-cyan [&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors
+      [&_strong]:text-text-primary [&_strong]:font-semibold
+      [&_em]:text-text-secondary [&_em]:italic
+      [&_code]:bg-bg-raised [&_code]:text-accent-cyan [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
+      [&_pre]:bg-bg-raised [&_pre]:border [&_pre]:border-border-subtle [&_pre]:rounded-xl [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:mb-6
+      [&_pre_code]:bg-transparent [&_pre_code]:text-text-secondary [&_pre_code]:p-0
+      [&_blockquote]:border-l-4 [&_blockquote]:border-accent-blue [&_blockquote]:pl-4 [&_blockquote]:text-text-muted [&_blockquote]:italic [&_blockquote]:my-6
+      [&_hr]:border-border-subtle [&_hr]:my-8
+      [&_table]:w-full [&_table]:border-collapse [&_table]:mb-6
+      [&_th]:text-left [&_th]:p-3 [&_th]:bg-bg-raised [&_th]:text-text-primary [&_th]:font-semibold [&_th]:border [&_th]:border-border-subtle
+      [&_td]:p-3 [&_td]:text-text-secondary [&_td]:border [&_td]:border-border-subtle
+      [&_img]:rounded-xl [&_img]:border [&_img]:border-border-subtle [&_img]:my-6">  <h2 id="introduction">Introduction</h2>
+<p>Web debugging from a security perspective goes beyond watching network requests in DevTools. It involves understanding the full request/response cycle, intercepting and modifying traffic, and identifying where application logic can be manipulated.</p>
+<p>This guide covers the tools and techniques used in day-to-day security research and penetration testing.</p>
+<hr>
+<h2 id="browser-devtools--the-starting-point">Browser DevTools — The Starting Point</h2>
+<p>Every security test starts here. The Network tab is your primary window into what an application is doing.</p>
+<h3 id="key-devtools-techniques">Key DevTools Techniques</h3>
+<p><strong>Preserve logs across navigations:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Network tab → ✅ Preserve log</span></span></code></pre>
+<p>Essential for capturing redirects and auth flows that clear the history.</p>
+<p><strong>Filter by request type:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Network tab → XHR/Fetch → See all API calls</span></span></code></pre>
+<p><strong>Replay and modify requests:</strong></p>
+<ol>
+<li>Right-click any request → “Copy as curl”</li>
+<li>Modify and replay in terminal</li>
+<li>Or use DevTools → Network → Right-click → “Edit and Resend” (Firefox)</li>
+</ol>
+<p><strong>Override responses:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Sources tab → Overrides → Enable local overrides</span></span>
+<span class="line"><span>Select a JS file → Make edits → Changes persist across reloads</span></span></code></pre>
+<p>This is useful for patching client-side validation or modifying JavaScript logic.</p>
+<hr>
+<h2 id="intercepting-https-with-burp-suite">Intercepting HTTPS with Burp Suite</h2>
+<p>Burp Suite is the industry standard for web security testing. Setting it up correctly is critical.</p>
+<h3 id="setup">Setup</h3>
+<ol>
+<li>
+<p><strong>Install Burp Certificate Authority:</strong></p>
+<ul>
+<li>Start Burp → Proxy → Options → Export CA Certificate</li>
+<li>Add to system/browser trust store</li>
+<li>Or visit <code>http://burp</code> in a proxied browser</li>
+</ul>
+</li>
+<li>
+<p><strong>Configure Browser Proxy:</strong></p>
+<ul>
+<li>Browser → Network Settings → Manual proxy</li>
+<li>Host: <code>127.0.0.1</code>, Port: <code>8080</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Intercept traffic:</strong></p>
+<ul>
+<li>Proxy → Intercept → Intercept is on</li>
+<li>Browse the target application</li>
+<li>Requests appear for inspection and modification</li>
+</ul>
+</li>
+</ol>
+<h3 id="essential-burp-workflows">Essential Burp Workflows</h3>
+<p><strong>Intruder for parameter fuzzing:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Right-click request → Send to Intruder</span></span>
+<span class="line"><span>Mark injection points with §</span></span>
+<span class="line"><span>Attack type: Sniper for single parameter, Cluster bomb for multiple</span></span></code></pre>
+<p><strong>Repeater for manual testing:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Right-click request → Send to Repeater</span></span>
+<span class="line"><span>Modify and resend to test individual changes</span></span>
+<span class="line"><span>Compare responses systematically</span></span></code></pre>
+<p><strong>Scanner for automated discovery:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Right-click target → Scan</span></span>
+<span class="line"><span>Configure audit checks → Run</span></span>
+<span class="line"><span>Review findings in Dashboard</span></span></code></pre>
+<hr>
+<h2 id="mitmproxy--scriptable-interception">mitmproxy — Scriptable Interception</h2>
+<p><code>mitmproxy</code> is a powerful open-source HTTPS proxy with a Python scripting API. It’s ideal for automation and custom manipulation.</p>
+<h3 id="installation">Installation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">pip</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> mitmproxy</span></span>
+<span class="line"><span style="color:#6A737D"># or</span></span>
+<span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> mitmproxy</span><span style="color:#6A737D">  # macOS</span></span></code></pre>
+<h3 id="basic-usage">Basic Usage</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Interactive terminal UI</span></span>
+<span class="line"><span style="color:#B392F0">mitmproxy</span><span style="color:#79B8FF"> --listen-port</span><span style="color:#79B8FF"> 8080</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Dump all requests to terminal</span></span>
+<span class="line"><span style="color:#B392F0">mitmdump</span><span style="color:#79B8FF"> --listen-port</span><span style="color:#79B8FF"> 8080</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># With upstream proxy (for corporate environments)</span></span>
+<span class="line"><span style="color:#B392F0">mitmproxy</span><span style="color:#79B8FF"> --mode</span><span style="color:#9ECBFF"> upstream:http://corporate-proxy:8080</span></span></code></pre>
+<h3 id="custom-addon-scripts">Custom Addon Scripts</h3>
+<p>The real power of mitmproxy is scripting. Save as <code>addon.py</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> mitmproxy </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> http</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ModifyRequests</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> request</span><span style="color:#E1E4E8">(self, flow: http.HTTPFlow) -> </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">        # Log all API calls</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#9ECBFF"> "api."</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> flow.request.pretty_host:</span></span>
+<span class="line"><span style="color:#79B8FF">            print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"API: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">flow.request.method</span><span style="color:#79B8FF">}</span><span style="color:#79B8FF"> {</span><span style="color:#E1E4E8">flow.request.url</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        # Modify Authorization headers</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#9ECBFF"> "Authorization"</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> flow.request.headers:</span></span>
+<span class="line"><span style="color:#79B8FF">            print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"Token: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">flow.request.headers[</span><span style="color:#9ECBFF">'Authorization'</span><span style="color:#E1E4E8">][:</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">..."</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> response</span><span style="color:#E1E4E8">(self, flow: http.HTTPFlow) -> </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">        # Capture and log JSON responses</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#9ECBFF"> "application/json"</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> flow.response.headers.get(</span><span style="color:#9ECBFF">"content-type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">            print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">"Response: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">flow.response.text[:</span><span style="color:#79B8FF">200</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">        # Remove security headers for testing</span></span>
+<span class="line"><span style="color:#E1E4E8">        flow.response.headers.pop(</span><span style="color:#9ECBFF">"Content-Security-Policy"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        flow.response.headers.pop(</span><span style="color:#9ECBFF">"X-Frame-Options"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">addons </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [ModifyRequests()]</span></span></code></pre>
+<p>Run with:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">mitmproxy</span><span style="color:#79B8FF"> --listen-port</span><span style="color:#79B8FF"> 8080</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> addon.py</span></span></code></pre>
+<h3 id="useful-one-liners">Useful One-Liners</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Save all requests to a HAR file</span></span>
+<span class="line"><span style="color:#B392F0">mitmdump</span><span style="color:#79B8FF"> --listen-port</span><span style="color:#79B8FF"> 8080</span><span style="color:#79B8FF"> --save-stream-file</span><span style="color:#9ECBFF"> capture.mitm</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Filter only specific domains</span></span>
+<span class="line"><span style="color:#B392F0">mitmdump</span><span style="color:#79B8FF"> --listen-port</span><span style="color:#79B8FF"> 8080</span><span style="color:#79B8FF"> --flow-detail</span><span style="color:#79B8FF"> 3</span><span style="color:#9ECBFF"> "~d target.com"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Modify a specific parameter in all POST bodies</span></span>
+<span class="line"><span style="color:#B392F0">mitmdump</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> &#x3C;(</span><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> '</span></span>
+<span class="line"><span style="color:#9ECBFF">from mitmproxy import http</span></span>
+<span class="line"><span style="color:#9ECBFF">import json</span></span>
+<span class="line"><span style="color:#9ECBFF">def request(flow):</span></span>
+<span class="line"><span style="color:#9ECBFF">    if flow.request.method == "POST":</span></span>
+<span class="line"><span style="color:#9ECBFF">        try:</span></span>
+<span class="line"><span style="color:#9ECBFF">            body = json.loads(flow.request.text)</span></span>
+<span class="line"><span style="color:#9ECBFF">            if "role" in body:</span></span>
+<span class="line"><span style="color:#9ECBFF">                body["role"] = "admin"</span></span>
+<span class="line"><span style="color:#9ECBFF">                flow.request.text = json.dumps(body)</span></span>
+<span class="line"><span style="color:#9ECBFF">        except:</span></span>
+<span class="line"><span style="color:#9ECBFF">            pass</span></span>
+<span class="line"><span style="color:#9ECBFF">')</span></span></code></pre>
+<hr>
+<h2 id="debugging-authentication-flows">Debugging Authentication Flows</h2>
+<p>Security testing often involves understanding complex auth flows (OAuth, SAML, JWT). Here’s a systematic approach:</p>
+<h3 id="jwt-analysis">JWT Analysis</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Decode JWT without verification (for analysis only)</span></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "eyJhbGciOiJIUzI1NiJ9..."</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> cut</span><span style="color:#79B8FF"> -d.</span><span style="color:#79B8FF"> -f2</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> base64</span><span style="color:#79B8FF"> -d</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> python3</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> json.tool</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Check for weak signing key</span></span>
+<span class="line"><span style="color:#B392F0">hashcat</span><span style="color:#79B8FF"> -a</span><span style="color:#79B8FF"> 0</span><span style="color:#79B8FF"> -m</span><span style="color:#79B8FF"> 16500</span><span style="color:#9ECBFF"> jwt.txt</span><span style="color:#9ECBFF"> wordlist.txt</span></span></code></pre>
+<p>In Burp, the <strong>JWT Editor</strong> extension automatically detects and highlights JWTs, and provides modification/attack capabilities.</p>
+<h3 id="oauth-flow-interception">OAuth Flow Interception</h3>
+<ol>
+<li>Enable Burp intercept</li>
+<li>Trigger OAuth login flow</li>
+<li>Capture the <code>code</code> exchange at the callback</li>
+<li>Analyse state parameter for CSRF vulnerabilities</li>
+<li>Test for open redirect in the <code>redirect_uri</code></li>
+</ol>
+<hr>
+<h2 id="automated-request-modification">Automated Request Modification</h2>
+<p>For complex scenarios, combine tools:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D">#!/bin/bash</span></span>
+<span class="line"><span style="color:#6A737D"># Capture API calls, extract tokens, and test with modified parameters</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Step 1: Use mitmdump to capture a session token</span></span>
+<span class="line"><span style="color:#B392F0">mitmdump</span><span style="color:#79B8FF"> --listen-port</span><span style="color:#79B8FF"> 8080</span><span style="color:#79B8FF"> --save-stream-file</span><span style="color:#9ECBFF"> session.mitm</span><span style="color:#E1E4E8"> &#x26;</span></span>
+<span class="line"><span style="color:#E1E4E8">MITM_PID</span><span style="color:#F97583">=</span><span style="color:#79B8FF">$!</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Step 2: Let the user authenticate (manual step)</span></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "Authenticate in your browser (proxied through 8080)..."</span></span>
+<span class="line"><span style="color:#B392F0">sleep</span><span style="color:#79B8FF"> 30</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Step 3: Extract token from captured traffic</span></span>
+<span class="line"><span style="color:#E1E4E8">TOKEN</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">python3</span><span style="color:#79B8FF"> -c</span><span style="color:#9ECBFF"> "</span></span>
+<span class="line"><span style="color:#9ECBFF">import mitmproxy.io</span></span>
+<span class="line"><span style="color:#9ECBFF">with open('session.mitm', 'rb') as f:</span></span>
+<span class="line"><span style="color:#9ECBFF">    reader = mitmproxy.io.FlowReader(f)</span></span>
+<span class="line"><span style="color:#9ECBFF">    for flow in reader:</span></span>
+<span class="line"><span style="color:#9ECBFF">        auth = flow.request.headers.get('Authorization', '')</span></span>
+<span class="line"><span style="color:#9ECBFF">        if auth.startswith('Bearer '):</span></span>
+<span class="line"><span style="color:#9ECBFF">            print(auth[7:])</span></span>
+<span class="line"><span style="color:#9ECBFF">            break</span></span>
+<span class="line"><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF">kill</span><span style="color:#E1E4E8"> $MITM_PID</span></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> "Captured token: ${</span><span style="color:#E1E4E8">TOKEN</span><span style="color:#F97583">:</span><span style="color:#E1E4E8">0</span><span style="color:#F97583">:</span><span style="color:#E1E4E8">20</span><span style="color:#9ECBFF">}..."</span></span></code></pre>
+<hr>
+<h2 id="common-findings-from-web-debugging">Common Findings from Web Debugging</h2>
+<p>Through systematic web debugging, you’ll commonly find:</p>
+<ol>
+<li><strong>Sensitive data in URL parameters</strong> — tokens, IDs, user data in GET parameters that end up in logs</li>
+<li><strong>Insecure direct object references (IDOR)</strong> — change a numeric ID in a request to access other users’ data</li>
+<li><strong>Missing authorization on API endpoints</strong> — endpoints that work without authentication</li>
+<li><strong>Client-side security controls</strong> — disabled by modifying JavaScript or DOM</li>
+<li><strong>Verbose error messages</strong> — stack traces, database errors in API responses</li>
+<li><strong>Weak CORS configuration</strong> — <code>Access-Control-Allow-Origin: *</code> on authenticated endpoints</li>
+<li><strong>JWT algorithm confusion</strong> — <code>alg: none</code> accepted or RS256 confused with HS256</li>
+</ol>
+<hr>
+<h2 id="recommended-toolchain">Recommended Toolchain</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Task</th><th>Tool</th></tr></thead><tbody><tr><td>Day-to-day web testing</td><td>Burp Suite Community/Pro</td></tr><tr><td>Scripted automation</td><td>mitmproxy + Python</td></tr><tr><td>Quick browser inspection</td><td>Chrome DevTools</td></tr><tr><td>API testing</td><td>Bruno or Postman</td></tr><tr><td>JWT analysis</td><td>jwt.io + Burp JWT Editor</td></tr><tr><td>Traffic recording</td><td>Burp Enterprise / HAR export</td></tr><tr><td>Mobile app traffic</td><td>Burp + Android emulator or iOS simulator</td></tr></tbody></table>  </article> </div>  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"> <div class="border-t border-border-subtle pt-8"> <a href="/articles" class="btn-outline">← Back to Articles</a> </div> </div>  </main> <footer class="bg-bg-surface border-t border-border-subtle mt-24"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"> <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10"> <!-- Brand --> <div> <a href="/" class="flex items-center gap-3 mb-4"> <img src="/photon-sec-banner.jpeg" alt="PhotonSec" class="h-8 w-auto rounded-sm"> <span class="text-lg font-bold text-white">PhotonSec</span> </a> <p class="text-text-muted text-sm leading-relaxed max-w-xs">
+Cybersecurity consulting, research, and tooling. Offensive security, cloud hardening, AI/LLM security.
+</p> </div> <!-- Links --> <div> <h3 class="text-text-primary font-semibold text-sm uppercase tracking-wider mb-4">Navigation</h3> <ul class="space-y-2"> <li> <a href="/about" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> About </a> </li><li> <a href="/projects" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Projects </a> </li><li> <a href="/articles" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Articles </a> </li><li> <a href="/findings" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Findings </a> </li><li> <a href="/members/dashboard" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Member Zone </a> </li> </ul> </div> <!-- Contact & Social --> <div> <h3 class="text-text-primary font-semibold text-sm uppercase tracking-wider mb-4">Connect</h3> <div class="flex gap-3 mb-4"> <a href="https://github.com/Enelass" target="_blank" rel="noopener noreferrer" class="p-2 bg-bg-raised border border-border-subtle rounded-lg text-text-muted hover:text-accent-blue hover:border-accent-blue/40 transition-all duration-200" aria-label="GitHub"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg></a><a href="https://www.linkedin.com/in/bidabe" target="_blank" rel="noopener noreferrer" class="p-2 bg-bg-raised border border-border-subtle rounded-lg text-text-muted hover:text-accent-blue hover:border-accent-blue/40 transition-all duration-200" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a> </div> <p class="text-text-muted text-sm"> <a href="mailto:contact@photonsec.com.au" class="hover:text-accent-blue transition-colors">
+contact@photonsec.com.au
+</a> </p> <p class="text-text-muted text-sm mt-1">Australia</p> </div> </div> <!-- Bottom bar --> <div class="pt-8 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4"> <p class="text-text-muted text-xs">
+&copy; 2026 PhotonSec. All rights reserved.
+</p> <p class="text-text-muted text-xs">
+Florian Bidabé — Cyber Security Leader & Bug Bounty Researcher
+</p> </div> </div> </footer> <!-- Scroll animation observer --> <script type="module">const o=new IntersectionObserver(e=>{e.forEach(r=>{r.isIntersecting&&r.target.classList.add("visible")})},{threshold:.1,rootMargin:"0px 0px -50px 0px"});document.querySelectorAll(".animate-on-scroll").forEach(e=>{o.observe(e)});</script> </body> </html>

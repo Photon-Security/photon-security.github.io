@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- SEO --><title>Autonomous Coding Agents (IDE) — Home Use (Free)</title><meta name="description" content="Setting up free AI coding agents for home use — Claude Code, Roo Code, Copilot, and Codex — without enterprise proxy complexity. Configuration, model selection, and practical setup guide."><link rel="canonical" href="https://photonsec.com.au/articles/autonomous-coding-agents-ide-home-use/"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://photonsec.com.au/articles/autonomous-coding-agents-ide-home-use/"><meta property="og:title" content="Autonomous Coding Agents (IDE) — Home Use (Free)"><meta property="og:description" content="Setting up free AI coding agents for home use — Claude Code, Roo Code, Copilot, and Codex — without enterprise proxy complexity. Configuration, model selection, and practical setup guide."><meta property="og:image" content="https://photonsec.com.au/photon-sec-banner.jpeg"><meta property="og:site_name" content="PhotonSec"><meta property="og:locale" content="en_AU"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Autonomous Coding Agents (IDE) — Home Use (Free)"><meta name="twitter:description" content="Setting up free AI coding agents for home use — Claude Code, Roo Code, Copilot, and Codex — without enterprise proxy complexity. Configuration, model selection, and practical setup guide."><meta name="twitter:image" content="https://photonsec.com.au/photon-sec-banner.jpeg"><!-- Favicon --><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon.png"><!-- Fonts (self-hosted alternative: use Google Fonts preconnect) --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"><!-- JSON-LD Structured Data --><script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Florian Bidabé",
+        "jobTitle": "Cyber Security Leader",
+        "url": "https://photonsec.com.au",
+        "sameAs": [
+          "https://github.com/Enelass",
+          "https://www.linkedin.com/in/bidabe"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Commonwealth Bank of Australia"
+        }
+      }
+    </script><link rel="stylesheet" href="/_astro/_slug_.CHhW2Tyl.css"></head> <body class="bg-bg-primary"> <header id="nav-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"> <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex items-center justify-between h-16"> <!-- Logo --> <a href="/" class="flex items-center gap-3 group"> <img src="/photon-sec-banner.jpeg" alt="PhotonSec" class="h-8 w-auto rounded-sm opacity-90 group-hover:opacity-100 transition-opacity"> <span class="text-lg font-bold text-white hidden sm:block">PhotonSec</span> </a> <!-- Desktop Nav --> <div class="hidden md:flex items-center gap-1"> <a href="/" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Home </a><a href="/about" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> About </a><a href="/projects" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Projects </a><a href="/articles" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-accent-blue bg-accent-blue/10"> Articles </a><a href="/findings" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Findings </a> <a href="/members/dashboard" class="ml-3 px-4 py-2 bg-accent-blue/20 border border-accent-blue/40 text-accent-blue text-sm font-semibold rounded-lg hover:bg-accent-blue hover:text-white transition-all duration-200">
+Member Zone
+</a> </div> <!-- Mobile menu button --> <button id="mobile-menu-btn" class="md:hidden p-2 text-text-secondary hover:text-white transition-colors" aria-label="Toggle menu" aria-expanded="false"> <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg> <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path> </svg> </button> </div> <!-- Mobile Nav --> <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-border-subtle mt-1"> <div class="flex flex-col gap-1 pt-3"> <a href="/" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Home </a><a href="/about" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> About </a><a href="/projects" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Projects </a><a href="/articles" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Articles </a><a href="/findings" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Findings </a> <a href="/members/dashboard" class="mt-2 px-4 py-3 bg-accent-blue/20 border border-accent-blue/40 text-accent-blue text-sm font-semibold rounded-lg hover:bg-accent-blue hover:text-white transition-all duration-200">
+Member Zone
+</a> </div> </div> </nav> </header> <!-- Spacer for fixed nav --> <div class="h-16"></div> <script type="module">const e=document.getElementById("nav-header"),d=document.getElementById("mobile-menu-btn"),n=document.getElementById("mobile-menu"),r=document.getElementById("menu-icon"),o=document.getElementById("close-icon");window.addEventListener("scroll",()=>{window.scrollY>10?e?.classList.add("bg-bg-primary/90","backdrop-blur-md","border-b","border-border-subtle"):e?.classList.remove("bg-bg-primary/90","backdrop-blur-md","border-b","border-border-subtle")});d?.addEventListener("click",()=>{const t=d.getAttribute("aria-expanded")==="true";d.setAttribute("aria-expanded",String(!t)),n?.classList.toggle("hidden"),r?.classList.toggle("hidden"),o?.classList.toggle("hidden"),t?window.scrollY<=10&&e?.classList.remove("bg-bg-primary/95","backdrop-blur-md"):e?.classList.add("bg-bg-primary/95","backdrop-blur-md")});</script> <main>   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8"> <div class="animate-on-scroll"> <!-- Breadcrumb --> <nav class="flex items-center gap-2 text-sm text-text-muted mb-8"> <a href="/" class="hover:text-accent-blue transition-colors">Home</a> <span>›</span> <a href="/articles" class="hover:text-accent-blue transition-colors">Articles</a> <span>›</span> <span class="text-text-secondary truncate">Autonomous Coding Agents (IDE) — Home Use (Free)</span> </nav> <!-- Category + date --> <div class="flex flex-wrap items-center gap-3 mb-5"> <span class="badge badge-gray">DevTools</span> <span class="text-text-muted text-sm">29 September 2025</span> <span class="text-text-muted text-sm flex items-center gap-1"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> 9 min read
+</span> </div> <!-- Title --> <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6"> Autonomous Coding Agents (IDE) — Home Use (Free) </h1> <!-- Description --> <p class="text-text-secondary text-xl leading-relaxed mb-8">Setting up free AI coding agents for home use — Claude Code, Roo Code, Copilot, and Codex — without enterprise proxy complexity. Configuration, model selection, and practical setup guide.</p> <!-- Tags --> <div class="flex flex-wrap gap-2 mb-8"> <span class="badge-gray text-xs">AI</span><span class="badge-gray text-xs">LLM</span><span class="badge-gray text-xs">Claude Code</span><span class="badge-gray text-xs">Roo Code</span><span class="badge-gray text-xs">Copilot</span><span class="badge-gray text-xs">Coding Agent</span><span class="badge-gray text-xs">IDE</span><span class="badge-gray text-xs">Free Tier</span> </div> <!-- Divider --> <div class="border-b border-border-subtle"></div> </div> </div>  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10"> <article class="prose-dark max-w-none
+      [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-text-primary [&_h1]:mb-6 [&_h1]:mt-10
+      [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-text-primary [&_h2]:mb-4 [&_h2]:mt-10 [&_h2]:pb-2 [&_h2]:border-b [&_h2]:border-border-subtle
+      [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-text-primary [&_h3]:mb-3 [&_h3]:mt-8
+      [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-text-primary [&_h4]:mb-2 [&_h4]:mt-6
+      [&_p]:text-text-secondary [&_p]:leading-relaxed [&_p]:mb-4
+      [&_ul]:text-text-secondary [&_ul]:space-y-2 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6
+      [&_ol]:text-text-secondary [&_ol]:space-y-2 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6
+      [&_li]:leading-relaxed
+      [&_a]:text-accent-blue [&_a]:hover:text-accent-cyan [&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors
+      [&_strong]:text-text-primary [&_strong]:font-semibold
+      [&_em]:text-text-secondary [&_em]:italic
+      [&_code]:bg-bg-raised [&_code]:text-accent-cyan [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
+      [&_pre]:bg-bg-raised [&_pre]:border [&_pre]:border-border-subtle [&_pre]:rounded-xl [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:mb-6
+      [&_pre_code]:bg-transparent [&_pre_code]:text-text-secondary [&_pre_code]:p-0
+      [&_blockquote]:border-l-4 [&_blockquote]:border-accent-blue [&_blockquote]:pl-4 [&_blockquote]:text-text-muted [&_blockquote]:italic [&_blockquote]:my-6
+      [&_hr]:border-border-subtle [&_hr]:my-8
+      [&_table]:w-full [&_table]:border-collapse [&_table]:mb-6
+      [&_th]:text-left [&_th]:p-3 [&_th]:bg-bg-raised [&_th]:text-text-primary [&_th]:font-semibold [&_th]:border [&_th]:border-border-subtle
+      [&_td]:p-3 [&_td]:text-text-secondary [&_td]:border [&_td]:border-border-subtle
+      [&_img]:rounded-xl [&_img]:border [&_img]:border-border-subtle [&_img]:my-6">  <h2 id="overview">Overview</h2>
+<p>AI coding agents have transformed how developers write, debug, and understand code. This guide covers setting up the major free-tier options for home use, where you don’t have to deal with corporate proxies, SSL inspection, or data governance policies.</p>
+<hr>
+<h2 id="the-landscape-2025">The Landscape (2025)</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tool</th><th>Provider</th><th>Free Tier</th><th>Best For</th></tr></thead><tbody><tr><td>Claude Code</td><td>Anthropic</td><td>Free plan via claude.ai</td><td>Agentic coding, large context</td></tr><tr><td>Roo Code</td><td>Roo</td><td>Free (BYOK)</td><td>VS Code integration, multiple models</td></tr><tr><td>GitHub Copilot</td><td>GitHub/MS</td><td>Free (limited)</td><td>IDE autocomplete</td></tr><tr><td>Codex / ChatGPT</td><td>OpenAI</td><td>Limited free</td><td>General purpose</td></tr><tr><td>Gemini CLI</td><td>Google</td><td>Free tier</td><td>Google ecosystem</td></tr><tr><td>Ollama</td><td>Local</td><td>Completely free</td><td>Privacy, offline</td></tr></tbody></table>
+<hr>
+<h2 id="claude-code-anthropic">Claude Code (Anthropic)</h2>
+<p><strong>Best for</strong>: Long autonomous coding tasks, agentic workflows, file editing across projects.</p>
+<h3 id="installation">Installation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Requires Node.js 18+</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> install</span><span style="color:#79B8FF"> -g</span><span style="color:#9ECBFF"> @anthropic-ai/claude-code</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Authenticate with your Anthropic account (free plan available)</span></span>
+<span class="line"><span style="color:#B392F0">claude</span><span style="color:#9ECBFF"> auth</span><span style="color:#9ECBFF"> login</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Start a session</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /your/project</span></span>
+<span class="line"><span style="color:#B392F0">claude</span></span></code></pre>
+<h3 id="configuration">Configuration</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># claude is configured per-project with CLAUDE.md files</span></span>
+<span class="line"><span style="color:#6A737D"># Create a CLAUDE.md in your project root:</span></span>
+<span class="line"><span style="color:#B392F0">cat</span><span style="color:#F97583"> ></span><span style="color:#9ECBFF"> CLAUDE.md</span><span style="color:#F97583"> &#x3C;&#x3C;</span><span style="color:#9ECBFF"> 'EOF'</span></span>
+<span class="line"><span style="color:#9ECBFF"># Project Context</span></span>
+<span class="line"><span style="color:#9ECBFF">This is a TypeScript web app using React and Express.</span></span>
+<span class="line"><span style="color:#9ECBFF">- Use functional components with hooks</span></span>
+<span class="line"><span style="color:#9ECBFF">- Prefer explicit type annotations</span></span>
+<span class="line"><span style="color:#9ECBFF">- Run `npm test` after code changes</span></span>
+<span class="line"><span style="color:#9ECBFF">EOF</span></span></code></pre>
+<h3 id="key-capabilities">Key Capabilities</h3>
+<ul>
+<li>Full file system access (reads and writes files)</li>
+<li>Runs shell commands and tests</li>
+<li>Maintains context across multi-file changes</li>
+<li><code>--continue</code> flag resumes previous sessions</li>
+</ul>
+<hr>
+<h2 id="roo-code-vs-code-extension">Roo Code (VS Code Extension)</h2>
+<p><strong>Best for</strong>: In-editor AI assistance, quick completions, multiple model backends.</p>
+<h3 id="installation-1">Installation</h3>
+<ol>
+<li>Open VS Code</li>
+<li>Extensions → Search “Roo Code” (formerly Roo Cline)</li>
+<li>Install</li>
+</ol>
+<h3 id="configuration-1">Configuration</h3>
+<p>Roo Code supports multiple API backends. For the free Anthropic option:</p>
+<ol>
+<li>Get a free API key at console.anthropic.com (includes $5 free credits)</li>
+<li>Roo Code settings → API Provider → Anthropic</li>
+<li>Enter your API key</li>
+<li>Select <code>claude-3-5-haiku-*</code> for cost efficiency</li>
+</ol>
+<h3 id="modes">Modes</h3>
+<p>Roo Code runs in different modes depending on task type:</p>
+<ul>
+<li><strong>Code</strong>: Writes and edits files</li>
+<li><strong>Architect</strong>: Plans and designs before writing</li>
+<li><strong>Ask</strong>: Q&#x26;A without file modifications</li>
+<li><strong>Debug</strong>: Focused on diagnosing and fixing issues</li>
+</ul>
+<hr>
+<h2 id="github-copilot-free-tier">GitHub Copilot (Free Tier)</h2>
+<p><strong>Best for</strong>: Inline completions, GitHub-integrated workflows.</p>
+<h3 id="free-tier-limitations-2025">Free Tier Limitations (2025)</h3>
+<ul>
+<li>2,000 code completions/month</li>
+<li>50 chat requests/month</li>
+<li>Limited to VS Code, JetBrains, vim plugins</li>
+</ul>
+<h3 id="setup">Setup</h3>
+<ol>
+<li>GitHub account → Settings → Copilot → Enable free plan</li>
+<li>Install “GitHub Copilot” extension in VS Code</li>
+<li>Sign in with GitHub</li>
+</ol>
+<h3 id="tips-for-free-tier">Tips for Free Tier</h3>
+<ul>
+<li>Use completions for boilerplate, not complex logic</li>
+<li>The chat feature (Copilot Chat) counts against your quota — use it judiciously</li>
+<li>Free tier uses <code>claude-3.5-sonnet</code> or <code>gpt-4o</code> depending on request type</li>
+</ul>
+<hr>
+<h2 id="ollama-completely-local">Ollama (Completely Local)</h2>
+<p><strong>Best for</strong>: Privacy-sensitive projects, offline development, unlimited free usage.</p>
+<h3 id="installation-2">Installation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># macOS</span></span>
+<span class="line"><span style="color:#B392F0">brew</span><span style="color:#9ECBFF"> install</span><span style="color:#9ECBFF"> ollama</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Linux</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -fsSL</span><span style="color:#9ECBFF"> https://ollama.ai/install.sh</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Windows: Download from ollama.ai</span></span></code></pre>
+<h3 id="running-models">Running Models</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Pull a code-optimised model</span></span>
+<span class="line"><span style="color:#B392F0">ollama</span><span style="color:#9ECBFF"> pull</span><span style="color:#9ECBFF"> codellama:7b</span><span style="color:#6A737D">        # Meta's code model, 4GB</span></span>
+<span class="line"><span style="color:#B392F0">ollama</span><span style="color:#9ECBFF"> pull</span><span style="color:#9ECBFF"> deepseek-coder:6.7b</span><span style="color:#6A737D"> # Strong coding performance, 4GB</span></span>
+<span class="line"><span style="color:#B392F0">ollama</span><span style="color:#9ECBFF"> pull</span><span style="color:#9ECBFF"> qwen2.5-coder:7b</span><span style="color:#6A737D">    # Excellent coding model from Alibaba</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Start interactive session</span></span>
+<span class="line"><span style="color:#B392F0">ollama</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> deepseek-coder:6.7b</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Use as API (compatible with OpenAI format)</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#9ECBFF"> http://localhost:11434/v1/chat/completions</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -H</span><span style="color:#9ECBFF"> "Content-Type: application/json"</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -d</span><span style="color:#9ECBFF"> '{</span></span>
+<span class="line"><span style="color:#9ECBFF">    "model": "deepseek-coder:6.7b",</span></span>
+<span class="line"><span style="color:#9ECBFF">    "messages": [{"role": "user", "content": "Write a Python function to parse JSON"}]</span></span>
+<span class="line"><span style="color:#9ECBFF">  }'</span></span></code></pre>
+<h3 id="integrate-with-roo-code">Integrate with Roo Code</h3>
+<p>Roo Code supports Ollama as a local backend:</p>
+<ol>
+<li>Roo Code settings → API Provider → Ollama</li>
+<li>Base URL: <code>http://localhost:11434</code></li>
+<li>Model: <code>deepseek-coder:6.7b</code> (or whichever you’ve pulled)</li>
+</ol>
+<p><strong>Advantages</strong>: No API costs, no data leaves your machine, no rate limits.</p>
+<hr>
+<h2 id="choosing-the-right-tool">Choosing the Right Tool</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Personal project with no data sensitivity?</span></span>
+<span class="line"><span>  → Roo Code + Claude Haiku (cheap) or Copilot (free completions)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Complex multi-file refactoring task?</span></span>
+<span class="line"><span>  → Claude Code (best long-context agentic reasoning)</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Privacy-sensitive work?</span></span>
+<span class="line"><span>  → Ollama with deepseek-coder or qwen2.5-coder</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Quick inline completions?</span></span>
+<span class="line"><span>  → GitHub Copilot free tier</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Want to experiment with multiple models?</span></span>
+<span class="line"><span>  → Roo Code (swap backends easily)</span></span></code></pre>
+<hr>
+<h2 id="cost-management-tips">Cost Management Tips</h2>
+<ol>
+<li><strong>Use Haiku for routine tasks</strong> — claude-haiku-* is 10-20x cheaper than Sonnet for simple completions</li>
+<li><strong>Set usage limits</strong> — Anthropic console lets you set monthly spending caps</li>
+<li><strong>Cache your sessions</strong> — Claude Code’s <code>--continue</code> flag reuses conversation history, reducing re-sending context</li>
+<li><strong>Use local for experimentation</strong> — Ollama is free; use it for prototyping prompts before using paid APIs</li>
+<li><strong>Monitor token usage</strong> — Most tools show token counts; long system prompts add up quickly</li>
+</ol>  </article> </div>  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"> <div class="border-t border-border-subtle pt-8"> <a href="/articles" class="btn-outline">← Back to Articles</a> </div> </div>  </main> <footer class="bg-bg-surface border-t border-border-subtle mt-24"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"> <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10"> <!-- Brand --> <div> <a href="/" class="flex items-center gap-3 mb-4"> <img src="/photon-sec-banner.jpeg" alt="PhotonSec" class="h-8 w-auto rounded-sm"> <span class="text-lg font-bold text-white">PhotonSec</span> </a> <p class="text-text-muted text-sm leading-relaxed max-w-xs">
+Cybersecurity consulting, research, and tooling. Offensive security, cloud hardening, AI/LLM security.
+</p> </div> <!-- Links --> <div> <h3 class="text-text-primary font-semibold text-sm uppercase tracking-wider mb-4">Navigation</h3> <ul class="space-y-2"> <li> <a href="/about" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> About </a> </li><li> <a href="/projects" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Projects </a> </li><li> <a href="/articles" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Articles </a> </li><li> <a href="/findings" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Findings </a> </li><li> <a href="/members/dashboard" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Member Zone </a> </li> </ul> </div> <!-- Contact & Social --> <div> <h3 class="text-text-primary font-semibold text-sm uppercase tracking-wider mb-4">Connect</h3> <div class="flex gap-3 mb-4"> <a href="https://github.com/Enelass" target="_blank" rel="noopener noreferrer" class="p-2 bg-bg-raised border border-border-subtle rounded-lg text-text-muted hover:text-accent-blue hover:border-accent-blue/40 transition-all duration-200" aria-label="GitHub"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg></a><a href="https://www.linkedin.com/in/bidabe" target="_blank" rel="noopener noreferrer" class="p-2 bg-bg-raised border border-border-subtle rounded-lg text-text-muted hover:text-accent-blue hover:border-accent-blue/40 transition-all duration-200" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a> </div> <p class="text-text-muted text-sm"> <a href="mailto:contact@photonsec.com.au" class="hover:text-accent-blue transition-colors">
+contact@photonsec.com.au
+</a> </p> <p class="text-text-muted text-sm mt-1">Australia</p> </div> </div> <!-- Bottom bar --> <div class="pt-8 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4"> <p class="text-text-muted text-xs">
+&copy; 2026 PhotonSec. All rights reserved.
+</p> <p class="text-text-muted text-xs">
+Florian Bidabé — Cyber Security Leader & Bug Bounty Researcher
+</p> </div> </div> </footer> <!-- Scroll animation observer --> <script type="module">const o=new IntersectionObserver(e=>{e.forEach(r=>{r.isIntersecting&&r.target.classList.add("visible")})},{threshold:.1,rootMargin:"0px 0px -50px 0px"});document.querySelectorAll(".animate-on-scroll").forEach(e=>{o.observe(e)});</script> </body> </html>

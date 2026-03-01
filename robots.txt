@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block member zone from indexing (auth-gated, no public value)
+Disallow: /members/
+
+# Sitemap
+Sitemap: https://photonsec.com.au/sitemap-index.xml

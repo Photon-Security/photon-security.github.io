@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- SEO --><title>Deep Dive into Deep Packet Inspection</title><meta name="description" content="A comprehensive technical exploration of Deep Packet Inspection (DPI) — how it works, where it's deployed, how it intercepts TLS traffic, and what security professionals need to know about operating in DPI-inspected environments."><link rel="canonical" href="https://photonsec.com.au/articles/deep-dive-deep-packet-inspection/"><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:url" content="https://photonsec.com.au/articles/deep-dive-deep-packet-inspection/"><meta property="og:title" content="Deep Dive into Deep Packet Inspection"><meta property="og:description" content="A comprehensive technical exploration of Deep Packet Inspection (DPI) — how it works, where it's deployed, how it intercepts TLS traffic, and what security professionals need to know about operating in DPI-inspected environments."><meta property="og:image" content="https://photonsec.com.au/photon-sec-banner.jpeg"><meta property="og:site_name" content="PhotonSec"><meta property="og:locale" content="en_AU"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Deep Dive into Deep Packet Inspection"><meta name="twitter:description" content="A comprehensive technical exploration of Deep Packet Inspection (DPI) — how it works, where it's deployed, how it intercepts TLS traffic, and what security professionals need to know about operating in DPI-inspected environments."><meta name="twitter:image" content="https://photonsec.com.au/photon-sec-banner.jpeg"><!-- Favicon --><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon.png"><!-- Fonts (self-hosted alternative: use Google Fonts preconnect) --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"><!-- JSON-LD Structured Data --><script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Florian Bidabé",
+        "jobTitle": "Cyber Security Leader",
+        "url": "https://photonsec.com.au",
+        "sameAs": [
+          "https://github.com/Enelass",
+          "https://www.linkedin.com/in/bidabe"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Commonwealth Bank of Australia"
+        }
+      }
+    </script><link rel="stylesheet" href="/_astro/_slug_.CHhW2Tyl.css"></head> <body class="bg-bg-primary"> <header id="nav-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"> <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex items-center justify-between h-16"> <!-- Logo --> <a href="/" class="flex items-center gap-3 group"> <img src="/photon-sec-banner.jpeg" alt="PhotonSec" class="h-8 w-auto rounded-sm opacity-90 group-hover:opacity-100 transition-opacity"> <span class="text-lg font-bold text-white hidden sm:block">PhotonSec</span> </a> <!-- Desktop Nav --> <div class="hidden md:flex items-center gap-1"> <a href="/" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Home </a><a href="/about" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> About </a><a href="/projects" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Projects </a><a href="/articles" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-accent-blue bg-accent-blue/10"> Articles </a><a href="/findings" class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Findings </a> <a href="/members/dashboard" class="ml-3 px-4 py-2 bg-accent-blue/20 border border-accent-blue/40 text-accent-blue text-sm font-semibold rounded-lg hover:bg-accent-blue hover:text-white transition-all duration-200">
+Member Zone
+</a> </div> <!-- Mobile menu button --> <button id="mobile-menu-btn" class="md:hidden p-2 text-text-secondary hover:text-white transition-colors" aria-label="Toggle menu" aria-expanded="false"> <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path> </svg> <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path> </svg> </button> </div> <!-- Mobile Nav --> <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-border-subtle mt-1"> <div class="flex flex-col gap-1 pt-3"> <a href="/" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Home </a><a href="/about" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> About </a><a href="/projects" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Projects </a><a href="/articles" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Articles </a><a href="/findings" class="px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 text-text-secondary hover:text-white hover:bg-bg-raised"> Findings </a> <a href="/members/dashboard" class="mt-2 px-4 py-3 bg-accent-blue/20 border border-accent-blue/40 text-accent-blue text-sm font-semibold rounded-lg hover:bg-accent-blue hover:text-white transition-all duration-200">
+Member Zone
+</a> </div> </div> </nav> </header> <!-- Spacer for fixed nav --> <div class="h-16"></div> <script type="module">const e=document.getElementById("nav-header"),d=document.getElementById("mobile-menu-btn"),n=document.getElementById("mobile-menu"),r=document.getElementById("menu-icon"),o=document.getElementById("close-icon");window.addEventListener("scroll",()=>{window.scrollY>10?e?.classList.add("bg-bg-primary/90","backdrop-blur-md","border-b","border-border-subtle"):e?.classList.remove("bg-bg-primary/90","backdrop-blur-md","border-b","border-border-subtle")});d?.addEventListener("click",()=>{const t=d.getAttribute("aria-expanded")==="true";d.setAttribute("aria-expanded",String(!t)),n?.classList.toggle("hidden"),r?.classList.toggle("hidden"),o?.classList.toggle("hidden"),t?window.scrollY<=10&&e?.classList.remove("bg-bg-primary/95","backdrop-blur-md"):e?.classList.add("bg-bg-primary/95","backdrop-blur-md")});</script> <main>   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8"> <div class="animate-on-scroll"> <!-- Breadcrumb --> <nav class="flex items-center gap-2 text-sm text-text-muted mb-8"> <a href="/" class="hover:text-accent-blue transition-colors">Home</a> <span>›</span> <a href="/articles" class="hover:text-accent-blue transition-colors">Articles</a> <span>›</span> <span class="text-text-secondary truncate">Deep Dive into Deep Packet Inspection</span> </nav> <!-- Category + date --> <div class="flex flex-wrap items-center gap-3 mb-5"> <span class="badge badge-cyan">Networking/SSL</span> <span class="text-text-muted text-sm">30 September 2025</span> <span class="text-text-muted text-sm flex items-center gap-1"> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path> </svg> 18 min read
+</span> </div> <!-- Title --> <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6"> Deep Dive into Deep Packet Inspection </h1> <!-- Description --> <p class="text-text-secondary text-xl leading-relaxed mb-8">A comprehensive technical exploration of Deep Packet Inspection (DPI) — how it works, where it&#39;s deployed, how it intercepts TLS traffic, and what security professionals need to know about operating in DPI-inspected environments.</p> <!-- Tags --> <div class="flex flex-wrap gap-2 mb-8"> <span class="badge-gray text-xs">DPI</span><span class="badge-gray text-xs">TLS</span><span class="badge-gray text-xs">SSL</span><span class="badge-gray text-xs">Network Security</span><span class="badge-gray text-xs">Traffic Inspection</span><span class="badge-gray text-xs">Privacy</span> </div> <!-- Divider --> <div class="border-b border-border-subtle"></div> </div> </div>  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10"> <article class="prose-dark max-w-none
+      [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-text-primary [&_h1]:mb-6 [&_h1]:mt-10
+      [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-text-primary [&_h2]:mb-4 [&_h2]:mt-10 [&_h2]:pb-2 [&_h2]:border-b [&_h2]:border-border-subtle
+      [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-text-primary [&_h3]:mb-3 [&_h3]:mt-8
+      [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-text-primary [&_h4]:mb-2 [&_h4]:mt-6
+      [&_p]:text-text-secondary [&_p]:leading-relaxed [&_p]:mb-4
+      [&_ul]:text-text-secondary [&_ul]:space-y-2 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6
+      [&_ol]:text-text-secondary [&_ol]:space-y-2 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6
+      [&_li]:leading-relaxed
+      [&_a]:text-accent-blue [&_a]:hover:text-accent-cyan [&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors
+      [&_strong]:text-text-primary [&_strong]:font-semibold
+      [&_em]:text-text-secondary [&_em]:italic
+      [&_code]:bg-bg-raised [&_code]:text-accent-cyan [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
+      [&_pre]:bg-bg-raised [&_pre]:border [&_pre]:border-border-subtle [&_pre]:rounded-xl [&_pre]:p-6 [&_pre]:overflow-x-auto [&_pre]:mb-6
+      [&_pre_code]:bg-transparent [&_pre_code]:text-text-secondary [&_pre_code]:p-0
+      [&_blockquote]:border-l-4 [&_blockquote]:border-accent-blue [&_blockquote]:pl-4 [&_blockquote]:text-text-muted [&_blockquote]:italic [&_blockquote]:my-6
+      [&_hr]:border-border-subtle [&_hr]:my-8
+      [&_table]:w-full [&_table]:border-collapse [&_table]:mb-6
+      [&_th]:text-left [&_th]:p-3 [&_th]:bg-bg-raised [&_th]:text-text-primary [&_th]:font-semibold [&_th]:border [&_th]:border-border-subtle
+      [&_td]:p-3 [&_td]:text-text-secondary [&_td]:border [&_td]:border-border-subtle
+      [&_img]:rounded-xl [&_img]:border [&_img]:border-border-subtle [&_img]:my-6">  <h2 id="what-is-deep-packet-inspection">What is Deep Packet Inspection?</h2>
+<p>Deep Packet Inspection (DPI) is a form of network traffic filtering and analysis that examines the <strong>data portion</strong> (payload) of a packet as it passes through an inspection point. Unlike shallow packet inspection — which only examines packet headers (source/destination IP, ports) — DPI reads the full content, including application-layer data.</p>
+<p>DPI is widely deployed in:</p>
+<ul>
+<li><strong>Enterprise networks</strong> — for data loss prevention (DLP), compliance monitoring, and security policy enforcement</li>
+<li><strong>Internet Service Providers (ISPs)</strong> — traffic management, filtering, and lawful interception</li>
+<li><strong>Government and national networks</strong> — censorship, surveillance infrastructure</li>
+<li><strong>Next-generation firewalls (NGFW)</strong> — unified threat management and application awareness</li>
+</ul>
+<hr>
+<h2 id="how-dpi-intercepts-tls-traffic">How DPI Intercepts TLS Traffic</h2>
+<p>Modern TLS (1.2 and 1.3) should, in theory, prevent payload inspection. The full handshake process establishes an encrypted channel that neither the network nor intermediaries can read — unless they perform a <strong>Man-in-the-Middle (MiTM) attack</strong>.</p>
+<p>Enterprise DPI solutions do exactly this via <strong>SSL/TLS inspection</strong> (also called SSL interception or SSL bumping):</p>
+<h3 id="the-ssl-inspection-flow">The SSL Inspection Flow</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Client                    DPI Proxy                    Server</span></span>
+<span class="line"><span>  |                           |                           |</span></span>
+<span class="line"><span>  |----ClientHello----------->|                           |</span></span>
+<span class="line"><span>  |                           |----ClientHello----------->|</span></span>
+<span class="line"><span>  |                           |&#x3C;---ServerHello, Cert------|</span></span>
+<span class="line"><span>  |                           | (validates real cert)     |</span></span>
+<span class="line"><span>  |                           | (generates fake cert      |</span></span>
+<span class="line"><span>  |                           |  signed by Corp CA)       |</span></span>
+<span class="line"><span>  |&#x3C;---ServerHello, FakeCert--|                           |</span></span>
+<span class="line"><span>  | (client trusts Corp CA)   |                           |</span></span>
+<span class="line"><span>  |----Finished (encrypted)-->|                           |</span></span>
+<span class="line"><span>  |                           |----Finished (encrypted)-->|</span></span>
+<span class="line"><span>  |&#x3C;===Encrypted Tunnel 1====>|&#x3C;===Encrypted Tunnel 2====>|</span></span>
+<span class="line"><span>  |    (Client &#x3C;-> Proxy)     |    (Proxy &#x3C;-> Server)     |</span></span></code></pre>
+<p>The proxy maintains <strong>two separate TLS sessions</strong>:</p>
+<ol>
+<li>One between the client and the proxy</li>
+<li>One between the proxy and the real server</li>
+</ol>
+<p>The proxy presents a <strong>dynamically generated certificate</strong> signed by a corporate Certificate Authority (CA) that has been pushed to all client devices as a trusted root.</p>
+<hr>
+<h2 id="trust-establishment-the-corporate-root-ca">Trust Establishment: The Corporate Root CA</h2>
+<p>For SSL inspection to work transparently, the inspection device’s CA certificate must be <strong>trusted by client endpoints</strong>. This is typically distributed via:</p>
+<ul>
+<li><strong>Group Policy (GPO)</strong> on Windows domains</li>
+<li><strong>MDM profiles</strong> on managed mobile devices</li>
+<li><strong>Browser policy</strong> for corporate browser deployments</li>
+</ul>
+<p>This is why security tools and proxies fail with certificate errors in environments that don’t have the corporate CA installed — the proxy presents its fake cert, but your tool doesn’t trust that CA.</p>
+<h3 id="identifying-dpi-certificate-substitution">Identifying DPI Certificate Substitution</h3>
+<p>You can identify when a certificate has been substituted by examining it:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Check the issuer of a certificate</span></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> openssl</span><span style="color:#9ECBFF"> s_client</span><span style="color:#79B8FF"> -connect</span><span style="color:#9ECBFF"> google.com:443</span><span style="color:#F97583"> 2></span><span style="color:#9ECBFF">/dev/null</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> openssl</span><span style="color:#9ECBFF"> x509</span><span style="color:#79B8FF"> -noout</span><span style="color:#79B8FF"> -issuer</span><span style="color:#79B8FF"> -subject</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Expected (no DPI):</span></span>
+<span class="line"><span style="color:#6A737D"># issuer=C=US, O=Google Trust Services, CN=GTS CA 1C3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># With DPI proxy:</span></span>
+<span class="line"><span style="color:#6A737D"># issuer=C=AU, O=Contoso Corp, CN=Contoso Enterprise CA</span></span></code></pre>
+<p>If the issuer is your organisation’s CA rather than a public CA (DigiCert, Google Trust Services, Let’s Encrypt, etc.), your traffic is being inspected.</p>
+<hr>
+<h2 id="common-dpi-evasion-techniques-used-by-security-tools">Common DPI Evasion Techniques Used by Security Tools</h2>
+<p>Several techniques can bypass or indicate the presence of DPI:</p>
+<h3 id="certificate-pinning">Certificate Pinning</h3>
+<p>Applications that pin their expected leaf or intermediate certificate will fail against a DPI proxy since the proxy presents a different certificate. This is why some security tools, mobile apps, and update mechanisms fail in inspected environments.</p>
+<h3 id="tls-13-encrypted-client-hello-ech">TLS 1.3 Encrypted Client Hello (ECH)</h3>
+<p>TLS 1.3 introduced <strong>Encrypted Client Hello</strong>, which encrypts the SNI (Server Name Indication) — previously sent in cleartext. This prevents DPI from seeing which hostname the client is connecting to. Many enterprise proxies don’t yet support ECH and may block or strip it.</p>
+<h3 id="quic--http3">QUIC / HTTP3</h3>
+<p>QUIC-based traffic (HTTP/3) is harder to inspect because:</p>
+<ul>
+<li>It uses UDP rather than TCP</li>
+<li>The connection establishment differs from TLS over TCP</li>
+<li>Many proxy appliances don’t support QUIC inspection and fall back to blocking UDP/443</li>
+</ul>
+<hr>
+<h2 id="security-implications">Security Implications</h2>
+<h3 id="for-defenders">For Defenders</h3>
+<p><strong>Visibility</strong>: SSL inspection gives security teams visibility into encrypted traffic, enabling detection of:</p>
+<ul>
+<li>Malware C2 communication over HTTPS</li>
+<li>Data exfiltration via encrypted channels</li>
+<li>Credential theft in transit</li>
+</ul>
+<p><strong>Risks introduced by SSL inspection</strong>:</p>
+<ul>
+<li>The inspection proxy itself becomes a high-value target — it holds private keys capable of decrypting all inspected traffic</li>
+<li>Weakened cipher negotiation between proxy and server (proxy may negotiate weaker ciphers)</li>
+<li>Certificate transparency issues — the dynamically generated certs aren’t logged to CT logs</li>
+</ul>
+<h3 id="for-penetration-testers">For Penetration Testers</h3>
+<p>When testing from within a corporate network:</p>
+<ol>
+<li><strong>Check if your traffic is inspected</strong> using the <code>openssl s_client</code> technique above</li>
+<li><strong>Install the corporate CA</strong> in your testing tools: <code>curl</code>, <code>python-requests</code>, Burp Suite, etc.</li>
+<li><strong>Beware of credential capture</strong> — assume all cleartext and even “encrypted” passwords may be visible to the DPI device</li>
+</ol>
+<h3 id="for-developers">For Developers</h3>
+<p>If your application performs certificate validation and is deployed in corporate environments:</p>
+<ul>
+<li>Avoid certificate pinning unless absolutely necessary (or use public key pinning with backup pins)</li>
+<li>Respect system trust stores rather than bundling your own CA list</li>
+<li>Provide a mechanism to specify a custom CA bundle for enterprise deployments</li>
+</ul>
+<hr>
+<h2 id="dpi-and-privacy">DPI and Privacy</h2>
+<p>The deployment of SSL inspection in enterprise environments raises significant privacy concerns:</p>
+<ul>
+<li>Personal banking, medical, and personal email traffic may be inspected</li>
+<li>Most employees are unaware their “encrypted” traffic is being decrypted</li>
+<li>Data retention policies on inspection logs are often unclear</li>
+</ul>
+<p>From a legal perspective, organisations typically cover SSL inspection through acceptable use policies and IT policies, though the adequacy of disclosure varies considerably.</p>
+<hr>
+<h2 id="summary">Summary</h2>
+<p>Deep Packet Inspection is a pervasive technique in modern enterprise and ISP networks. For security professionals:</p>
+<ul>
+<li><strong>Recognise</strong> DPI environments by checking certificate issuers</li>
+<li><strong>Understand</strong> the two-tunnel architecture of SSL interception</li>
+<li><strong>Configure</strong> security tools to trust corporate CA certificates</li>
+<li><strong>Consider</strong> the privacy and security implications of deploying SSL inspection</li>
+</ul>
+<p>The fundamental security takeaway: <strong>trust the certificate chain, not just the padlock</strong>. A padlock icon means TLS is in use — it does not guarantee end-to-end encryption from your browser to the destination.</p>  </article> </div>  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16"> <div class="border-t border-border-subtle pt-8"> <a href="/articles" class="btn-outline">← Back to Articles</a> </div> </div>  </main> <footer class="bg-bg-surface border-t border-border-subtle mt-24"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"> <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10"> <!-- Brand --> <div> <a href="/" class="flex items-center gap-3 mb-4"> <img src="/photon-sec-banner.jpeg" alt="PhotonSec" class="h-8 w-auto rounded-sm"> <span class="text-lg font-bold text-white">PhotonSec</span> </a> <p class="text-text-muted text-sm leading-relaxed max-w-xs">
+Cybersecurity consulting, research, and tooling. Offensive security, cloud hardening, AI/LLM security.
+</p> </div> <!-- Links --> <div> <h3 class="text-text-primary font-semibold text-sm uppercase tracking-wider mb-4">Navigation</h3> <ul class="space-y-2"> <li> <a href="/about" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> About </a> </li><li> <a href="/projects" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Projects </a> </li><li> <a href="/articles" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Articles </a> </li><li> <a href="/findings" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Findings </a> </li><li> <a href="/members/dashboard" class="text-text-muted text-sm hover:text-accent-blue transition-colors"> Member Zone </a> </li> </ul> </div> <!-- Contact & Social --> <div> <h3 class="text-text-primary font-semibold text-sm uppercase tracking-wider mb-4">Connect</h3> <div class="flex gap-3 mb-4"> <a href="https://github.com/Enelass" target="_blank" rel="noopener noreferrer" class="p-2 bg-bg-raised border border-border-subtle rounded-lg text-text-muted hover:text-accent-blue hover:border-accent-blue/40 transition-all duration-200" aria-label="GitHub"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/></svg></a><a href="https://www.linkedin.com/in/bidabe" target="_blank" rel="noopener noreferrer" class="p-2 bg-bg-raised border border-border-subtle rounded-lg text-text-muted hover:text-accent-blue hover:border-accent-blue/40 transition-all duration-200" aria-label="LinkedIn"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a> </div> <p class="text-text-muted text-sm"> <a href="mailto:contact@photonsec.com.au" class="hover:text-accent-blue transition-colors">
+contact@photonsec.com.au
+</a> </p> <p class="text-text-muted text-sm mt-1">Australia</p> </div> </div> <!-- Bottom bar --> <div class="pt-8 border-t border-border-subtle flex flex-col sm:flex-row items-center justify-between gap-4"> <p class="text-text-muted text-xs">
+&copy; 2026 PhotonSec. All rights reserved.
+</p> <p class="text-text-muted text-xs">
+Florian Bidabé — Cyber Security Leader & Bug Bounty Researcher
+</p> </div> </div> </footer> <!-- Scroll animation observer --> <script type="module">const o=new IntersectionObserver(e=>{e.forEach(r=>{r.isIntersecting&&r.target.classList.add("visible")})},{threshold:.1,rootMargin:"0px 0px -50px 0px"});document.querySelectorAll(".animate-on-scroll").forEach(e=>{o.observe(e)});</script> </body> </html>

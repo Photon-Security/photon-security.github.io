@@ -1,74 +1,5 @@
-
-# Gitignore
-dontsync.*
-*.dontsync
-dontsync/
-.gemini/
-__pycache__/
-
-# macOS system files
-.DS_Store
-.AppleDouble
-.LSOverride
-*.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-*.bak
-*.swp
-*.kdev4
-*~
-nohup.out
-
-# IDE and Editor-specific files
-.vscode/
-.idea/
-.vs/
-.opencode/
-*.sublime-workspace
-*.sublime-project
-*.code-workspace
-package-lock.json
-*.pyc
-*.pyo
-
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.pvm
-.Python
-.env
-.venv
-venv/
-ENV/
-env/
-Bootup.py
-
-# Agentic AI specific
-.roo/
-.cline/
-.claude/
-.gemini/
-.codex/
-.opencode/
-CLAUDE.md
-GEMINI.md
-AGENTS.md
+# This .gitignore is deployed to photon-security.github.io (the public/production repo)
+# It intentionally allows .pem files for BIMI email logo certificate
 
 # macOS
 .DS_Store
@@ -76,50 +7,12 @@ AGENTS.md
 .LSOverride
 ._*
 
-# Thumbnails
+# Windows
 Thumbs.db
 
-# Editor directories and files
-.vscode/
-.idea/
+# Editor artifacts
 *.swp
 *.swo
 *~
-
-# Logs
-logs/
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Temporary files
-tmp/
-temp/
-*.tmp
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# Build outputs
-dist/
-build/
-
-# Dependencies (if using npm/yarn)
-node_modules/
-
-# Backup files
-*.bak
-*.backup
-
-# Private keys and certificates
-*.key
-*.p12
-*.pfx
-*.lego
-
-# Allow BIMI email logo assets (public certificate, not a private key)
-*.pem
-!BIMI/logo.pem
+.vscode/
+.idea/
