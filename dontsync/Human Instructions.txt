@@ -1,0 +1,24 @@
+All right... This is my website. Half of it is from a consulting template, and it should be overwritten by my real experience and consulting services. I used to host a wordpress website on Azure but this was cost prohibitive. I used a consulting business template.
+I now want to run a static website.
+
+* I am a consultant. You will find my docx CV in the directory.
+* You will find articles that i have written in "C:\Users\Admin\Github\photon-security.github.io\dontsync\My_Confluence_Articles"
+* In "C:\Users\Admin\Github\PrivateRepo\Bug Bounty" you will find security findings I have submitted for which I got a bounty
+
+I want you to help me built my website.
+
+My website should capture who I am (my credentials), my technical writings (articles), the products I have built on Github (just my repos using the github MCP). The purpose of my website is to position myself as a Cyber expert, with sound leadership, and excellent technical littercy. I would like the website to be a window of who I and my company PhotonSec is.
+
+Take inspiration from website like this.
+https://www.ruv.net/
+https://portkey.ai/
+https://www.litellm.ai/
+https://www.primesec.ai/
+https://xmcyber.com/
+https://xbow.com/
+https://horizon3.ai/
+
+
+I would also like to have a CICD pipeline, where I can work on a Dev (Private repo) website, and if my changes are satisfying push the changes to my prod websites: https://photonsec.com.au/
+
+I also would like a public part in my website and a member-only zone with maybe a Firebase authentication.
