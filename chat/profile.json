@@ -1,0 +1,26 @@
+{
+  "name": "PhotonSec",
+  "owner": "Florian Bidabé",
+  "tagline": "PhotonSec helps organisations improve security and build trustworthy AI systems.",
+  "positioning": [
+    "Agentic AI & cybersecurity leadership",
+    "Security research and practical engineering",
+    "AI/LLM security and governance-minded delivery"
+  ],
+  "highlights": [
+    "Security researcher with findings disclosed to major vendors",
+    "Open-source tooling and technical writing on security and AI/LLM",
+    "Experience spanning security, automation, and LLM tooling"
+  ],
+  "services": [
+    "AI + RAG solution design and review",
+    "Security architecture and threat modelling",
+    "LLM security testing and prompt/policy hardening",
+    "Secure-by-design engineering and enablement"
+  ],
+  "engagement_cta": {
+    "prompt": "If you're considering working together, share your use case, data sensitivity, timeline, and success criteria.",
+    "next_step": "Use the contact form on photonsec.com.au to start the conversation."
+  }
+}
+
