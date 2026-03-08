@@ -1,0 +1,1 @@
+import{g as n,b as i}from"./firebase-client.CoZJTg6j.js";n().then(e=>{const t=document.getElementById("user-email");t&&e?.email&&(t.textContent=`Signed in as ${e.email}`)});document.getElementById("logout-btn")?.addEventListener("click",async()=>{await i(),window.location.href="/"});
