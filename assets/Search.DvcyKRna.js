@@ -1,0 +1,1 @@
+import r from"./ArticleCatalogue.DCV4UQYw.js";import{u as t}from"./jsxRuntime.module.kJjLVEAC.js";import"./hooks.module.CWwuo7Mu.js";import"./preact.module.EGlgVV74.js";import"./firebase-client.DPGP7YwB.js";import"./articles.bfFLbR-b.js";import"./ArticleVisibility.C9fQ-Fce.js";function c(){return t(r,{search:!0})}export{c as default};
